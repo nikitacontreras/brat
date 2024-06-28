@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				background-color: #1f1f1f;
+			}
+			.container {
+				background-color: #fff;
+				border: 1px solid #ababab;
+				height: 500px;
+				width: 500px;
+				margin: 0;
+				padding: 0 20px;
+				box-sizing: border-box;
+				display: flex;
+				align-items: flex-start;
+				justify-content: center;
+				overflow: hidden;
+				margin: 20px 0;
+			}
+
+			.text {
+				background-color: #fff;
+				text-align: justify;
+				text-justify: inter-word;
+				font-size: 60px;
+				filter: blur(2px);
+				font-family: Arial;
+				font-stretch: ultra-condensed;
+				margin: 20px;
+			}
+			h1 {
+				color: #ece8e8;
+				text-align: justify;
+				text-justify: inter-word;
+				font-size: 60px;
+				font-family: Arial;
+				font-stretch: ultra-condensed;
+				margin: 0;
+				padding-bottom: 20px;
+			}
+			input {
+				color: #ece8e8;
+				background-color: #2e2e2e;
+				border: 0;
+				outline: none;
+				height: 30px;
+				width: 500px;
+			}
+			.center {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				height: 100vh;
+			}
+			.social-networks {
+				display: flex;
+				justify-content: center;
+				margin-top: 20px;
+			}
+			.social-networks i {
+				font-size: 40px;
+				color: #ece8e8;
+				margin: 0 10px;
+				cursor: pointer;
+			}
+		</style>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+		<title>brat generator :P</title>
+	</head>
+	<body>
+		<div class="center">
+			<h1>brat generator</h1>
+			<input type="text" id="textInput" placeholder="Ingrese texto" oninput="updateText()" />
+
+			<div class="container" id="container">
+				<p class="text" id="text">Texto inicial</p>
+			</div>
+
+			<div class="social-networks">
+				<a href="https://github.com/nikitacontreras/brat"><i class="fab fa-github"></i></a>
+				<a href="https://open.spotify.com/artist/5N1ODpvMH7eK0dc8awjsB0"><i class="fab fa-spotify"></i></a>
+				<a href="https://youtube.com/@_STRIKEMEDIA_"><i class="fab fa-youtube"></i></a>
+			</div>
+		</div>
+
+		<script>
+			function adjustTextSize() {
+				const container = document.getElementById("container");
+				const text = document.getElementById("text");
+
+				text.style.fontSize = "60px";
+				text.style.lineHeight = "normal";
+
+				const textClone = text.cloneNode(true);
+				textClone.style.visibility = "hidden";
+				textClone.style.position = "absolute";
+				textClone.style.lineHeight = "normal";
+				textClone.style.width = container.clientWidth + "px";
+				container.appendChild(textClone);
+
+				let fontSize = parseInt(window.getComputedStyle(text).fontSize, 10);
+				const containerHeight = container.clientHeight;
+				const containerWidth = container.clientWidth;
+				let textHeight, textWidth;
+
+				do {
+					textHeight = textClone.scrollHeight;
+					textWidth = textClone.scrollWidth;
+
+					if (textHeight > containerHeight || textWidth > containerWidth) {
+						fontSize -= 1;
+						textClone.style.fontSize = fontSize + "px";
+					} else {
+						break;
+					}
+				} while (fontSize > 0);
+
+				text.style.fontSize = fontSize + "px";
+				textClone.style.fontSize = fontSize + "px";
+				textHeight = textClone.scrollHeight;
+				const newLineHeight = containerHeight / (textHeight / fontSize);
+				text.style.lineHeight = (newLineHeight > fontSize ? newLineHeight : fontSize) + "px";
+				container.removeChild(textClone);
+			}
+
+			function updateText() {
+				const textInput = document.getElementById("textInput");
+				const text = document.getElementById("text");
+
+				text.textContent = textInput.value;
+				adjustTextSize();
+			}
+
+			window.onload = adjustTextSize;
+			window.onresize = adjustTextSize;
+		</script>
+	</body>
+</html>
