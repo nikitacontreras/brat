@@ -7,6 +7,9 @@
 				padding: 0;
 				background-color: #1f1f1f;
 			}
+			body{
+				overflow:hidden;
+			}
 			.container {
 				background-color: #fff;
 				border: 1px solid #ababab;
@@ -44,6 +47,11 @@
 				font-family: Arial;
 				font-stretch: ultra-condensed;
 				margin: 0;
+			}
+			h3{
+				color:#696969;
+				font-size:12px;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 				padding-bottom: 20px;
 			}
 			input {
@@ -84,6 +92,7 @@
 	<body>
 		<div class="center">
 			<h1>brat generator</h1>
+			<h3>(screenshot to save the image)</h3>
 			<input type="text" id="textInput" placeholder="Ingrese texto" oninput="updateText()" />
 
 			<div class="container" id="container">
